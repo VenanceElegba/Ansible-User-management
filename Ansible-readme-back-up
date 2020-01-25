@@ -1,0 +1,76 @@
+# Users_Management_Ansible
+
+# Install ansible on ubuntu 
+
+sudo apt update
+
+sudo apt install software-properties-common
+
+sudo apt-add-repository --yes --update ppa:ansible/ansible
+
+sudo apt install ansible# You can use this way also 
+
+
+# You can use this way also 
+
+sudo apt-add-repository ppa:ansible/ansible && sudo apt update && sudo apt install ansible
+
+
+# Use this link for other distribution https://www.linuxsysadmins.com/install-and-configure-ansible-automation-it-tool/
+
+# Create Ansible User
+
+adduser ansible
+
+# Genarate SSH Key
+
+https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-1804
+
+ssh-keygen
+
+# Copy SSH Key to remote Users
+
+ssh-copy-id username@remote_host
+
+# Allow passwordless sudo 
+
+visudo 
+
+Add the following line to file 
+
+        #includedir /etc/sudoers.d
+		ansible      ALL=(ALL)       NOPASSWD: ALL
+
+# Use Vault to encrypt users default password
+
+
+ansible-vault encrypt group_vars/ubuntu
+
+# View encrypt password ansible-vault view group_vars/redhat
+
+# Use This  Link For more Setup  
+
+https://www.theurbanpenguin.com/managing-users-in-ansible/
+
+#Specify the host that will be use to deploy playbook 
+
+Example 1: ansible-playbook --vault-id @prompt --limit host2 create-users.yml
+
+Example 2: ansible-playbook --vault-id @prompt --limit host1 host2 create-users.yml
+
+#Execute playbook on all servers
+
+ansible-playbook --vault-id @prompt create-users.yml
+
+
+# Commande to execute ansible-playbook
+Exemple: Create news users.
+
+docker run --rm -it -v ~/.ssh/id_rsa:/root/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub -v $(pwd):/ansible/playbooks philm/ansible_playbook  create-users.yml
+
+
+
+
+
+
+

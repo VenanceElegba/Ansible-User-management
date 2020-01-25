@@ -1,0 +1,15 @@
+# Installing Packages with one Task ( Faster Process )
+
+---                               
+- name: Create New Users          
+  hosts: all                      
+  gather_facts: false             
+  tasks:
+    - name: Installing Packages
+      apt:
+        name: "{{ item }}"
+        update_cache: yes
+      with_items:
+        - git
+        - nginx
+        - memcached

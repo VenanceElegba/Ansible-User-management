@@ -1,0 +1,13 @@
+#This playbook is use to delete users provide in delete_users_list.yml
+---                      
+- name: Clean User Accounts
+  hosts: all             
+  gather_facts: false                                                                                                                  
+  become: true           
+  tasks:                                          
+    - include_vars: delete_users_list.yml #here is a list of user you are going to delete
+
+    - name: Deleting The users
+      user: name={{ item.username }} state=absent remove=yes
+      with_items: '{{users}}'
+

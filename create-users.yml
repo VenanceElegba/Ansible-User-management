@@ -1,0 +1,25 @@
+#This is ansible playbook to create user 
+#You can change hosts option to give remote host
+#Old users 
+---
+- name: Create New Users
+  hosts: all
+  gather_facts: false
+  tasks:
+     - include_vars: users_list.yml #here is a list of user you are going to crete
+
+     - name: Add users or  create users, shell, home dirs
+       user:
+         name: "{{ item.username }}"
+         # comment='create with ansible'
+         state: present
+         update_password: on_create
+         password: "{{ default_user_password | password_hash('sha512', 'A512') }}"
+         shell: /bin/bash
+         groups: "{{ admin_group }}"
+         append: true
+         createhome: yes
+       with_items:
+         - "{{ users }}"
+...
+
